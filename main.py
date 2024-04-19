@@ -472,7 +472,7 @@ print_array()
 select_player = get_select_player()
 games += 1
 
-while (True):
+while True:
 
     # получение результата игры
     result = get_game_result()
