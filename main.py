@@ -6,7 +6,7 @@
 1 __|__|__
 2 __|__|__
 3   |  |
-  а  б  в
+  1  2  3
 
 2. хранение состояние игры  
 2-й массив: 3 строки и 3 столбца
@@ -27,10 +27,10 @@
 """
 import random
 
-rows = 3    # количество строк
-cols = rows # количество столбцов
+rows = 3  # количество строк
+cols = rows  # количество столбцов
 
-select_player = False # F = человеке T = ПК
+select_player = False  # F = человеке T = ПК
 
 user_code = "x"
 pc_code = "o"
@@ -43,7 +43,6 @@ games_user_win = 0
 # количество ничьих
 games_draw = 0
 
-
 game_array = []
 
 for i in range(rows):
@@ -54,6 +53,7 @@ for i in range(rows):
 
     game_array.append(col)
 
+
 def clear_array(code: str = free_code):
     """
     Очистка массива
@@ -62,6 +62,7 @@ def clear_array(code: str = free_code):
     for row in range(rows):
         for col in range(cols):
             game_array[row][col] = code
+
 
 def print_array():
     for row in range(rows):
@@ -74,51 +75,63 @@ def print_array():
 
             print("_", end="|")
 
-        print("")    
+        print("")
 
     print(" ", end="")
     for col in range(cols):
         #print("___", end="|")
         print("_", end="")
 
-        print(col+1, end="")
+        print(col + 1, end="")
 
         print("_", end="|")
 
     print("")
     print("")
 
+
 def user_step():
+    """
+    Пользователь делает один шаг.
+    :return:
+    """
     while True:
         # 1.  начало цикла, ввод строки и столбца 
         print("введите координаты ячейки: строка столбец (2 3) ")
         data = input().split(sep=" ")
         row = int(data[0]) - 1
-        col = int(data[1]) - 1 
-
+        col = int(data[1]) - 1
 
         # 2. проверка на правильность данных
 
         if row >= rows or row < 0 or col >= cols or col < 0:
             # 3. данные некорректы , переход в начало 1.
-            print("Данные введены неккоректно!") 
+            print("Данные введены неккоректно!")
             continue
-        
+
         # 4. шаг игрока: заполним ячейку
         if game_array[row][col] == free_code:
             game_array[row][col] = user_code
 
         # 5. выход
         break
-        
+
+
 def is_even(n) -> bool:
     """
     Определяет четное ли число
     """
     return n % 2 == 0
 
+
 def is_odd(n) -> bool:
+    """
+    Определяет нечетное ли число
+    :param n: число
+    :return: True если нечетное, False если иначе
+    """
     return n % 2 == 1
+
 
 def test_center() -> bool:
     if is_even(rows):
@@ -130,28 +143,26 @@ def test_center() -> bool:
 
     if game_array[center][center] != free_code:
         return False
-    
+
     if count_cells(0, user_code) > 0:
         game_array[center][center] = pc_code
         return True
 
-    if count_cells(rows- 1, user_code) > 0:
+    if count_cells(rows - 1, user_code) > 0:
         game_array[center][center] = pc_code
         return True
-    
+
     if count_cells_col(0, user_code) > 0:
         game_array[center][center] = pc_code
         return True
 
-    if count_cells_col(cols- 1, user_code) > 0:
+    if count_cells_col(cols - 1, user_code) > 0:
         game_array[center][center] = pc_code
         return True
     return False
-   
+
 
 def pc_step():
-
-    
     # 1 поиск завершения игры
 
     if find_danger(pc_code):
@@ -160,7 +171,7 @@ def pc_step():
         return
 
     # 2 умная проверка, поиск опасной ячейки
-    if find_danger(user_code):   
+    if find_danger(user_code):
         # ячейка найдена и заполнена
         # т.е шаг сделан, выходим из функции
         return
@@ -173,9 +184,7 @@ def pc_step():
     if test_center():
         # если ее нашли и заполнили, то выходим из функции т.к. шаг сделан
         return
-    
 
-    
     free_cells = []
 
     for row in range(rows):
@@ -194,6 +203,7 @@ def pc_step():
 
         game_array[row][col] = pc_code
 
+
 def get_select_player() -> bool:
     """
     Выбор первого игрока.
@@ -201,6 +211,7 @@ def get_select_player() -> bool:
 
     """
     return input("Выберете кто начинает игру: 1 если ПК, иначе человек ") == "1"
+
 
 def count_cells(row, code):
     """
@@ -215,6 +226,7 @@ def count_cells(row, code):
             counter += 1
     return counter
 
+
 def count_cells_col(col, code):
     """
     Подсчет занятых ячеек по столбцу
@@ -228,6 +240,7 @@ def count_cells_col(col, code):
             counter += 1
     return counter
 
+
 def count_cells_diag_1(code):
     """
     Подсчет занятых ячеек по диагонали
@@ -239,6 +252,7 @@ def count_cells_diag_1(code):
         if game_array[row][row] == code:
             counter += 1
     return counter
+
 
 def count_cells_diag_2(code):
     """
@@ -252,6 +266,7 @@ def count_cells_diag_2(code):
             counter += 1
     return counter
 
+
 def is_free() -> bool:
     """
     Есть ли хотя бы одна свободная ячейка?
@@ -263,6 +278,7 @@ def is_free() -> bool:
                 return True
     return False
 
+
 def print_game_result(code):
     """
     Вывод результата игры
@@ -273,6 +289,7 @@ def print_game_result(code):
         print("Вы выйграли")
     elif code == 3:
         print("Вы проиграли")
+
 
 def get_game_result() -> int:
     """
@@ -292,7 +309,7 @@ def get_game_result() -> int:
 
         if counter == cols:
             return 2
-        
+
         counter = count_cells(row, pc_code)
 
         if counter == cols:
@@ -305,14 +322,14 @@ def get_game_result() -> int:
 
         if counter == cols:
             return 2
-        
+
         counter = count_cells_col(col, pc_code)
 
         if counter == cols:
             return 3
 
     # проверка по диагоналям
-        
+
     counter = count_cells_diag_1(user_code)
     if counter == cols:
         return 2
@@ -333,7 +350,7 @@ def get_game_result() -> int:
         return 1
 
 
-def continue_game() -> bool: 
+def continue_game() -> bool:
     """
     спрашиваем пользователя о продолжении игры.
     return: True - если играем новую игру, False - если завершаем
@@ -345,6 +362,7 @@ def continue_game() -> bool:
 
     return string_from_user == "1"
 
+
 def print_statistic():
     """
     функция выводит кол-во игр, побед, ничьих.
@@ -352,6 +370,7 @@ def print_statistic():
     print("кол-во игр         ", games)
     print("кол-во ничьих      ", games_draw)
     print("кол-во ваших побед ", games_user_win)
+
 
 def set_first_for_row(row, code):
     """
@@ -362,6 +381,7 @@ def set_first_for_row(row, code):
             game_array[row][col] = code
             return
 
+
 def set_first_for_col(col, code):
     """
     в указанном cтолбце найти свободную ячейку и заполнить кодом
@@ -370,6 +390,7 @@ def set_first_for_col(col, code):
         if game_array[row][col] == free_code:
             game_array[row][col] = code
             return
+
 
 def set_first_for_diag_1(code):
     """
@@ -380,6 +401,7 @@ def set_first_for_diag_1(code):
             game_array[row][row] = code
             return
 
+
 def set_first_for_diag_2(code):
     """
     в указанной  диагонали найти свободную ячейку и заполнить кодом
@@ -388,6 +410,7 @@ def set_first_for_diag_2(code):
         if game_array[row][rows - row - 1] == free_code:
             game_array[row][rows - row - 1] = code
             return
+
 
 def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
     """
@@ -407,7 +430,7 @@ def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
             set_first_for_row(i, pc_code)
             # и выходим из функции
             return True
-        
+
     for i in range(cols):
         user_count = count_cells_col(i, code_2)
         free_count = count_cells_col(i, code_1)
@@ -426,10 +449,10 @@ def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
         # заполняем свободую ячейку 
         set_first_for_diag_1(pc_code)
         # и выходим из функции
-        return True 
+        return True
 
-    # поиск по 2 диагонали        
-          
+        # поиск по 2 диагонали
+
     user_count = count_cells_diag_2(code_2)
     free_count = count_cells_diag_2(code_1)
 
@@ -437,7 +460,7 @@ def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
         # заполняем свободую ячейку 
         set_first_for_diag_2(pc_code)
         # и выходим из функции
-        return True       
+        return True
 
     return False
 
@@ -478,14 +501,14 @@ while (True):
         if result == 1:
             games_draw += 1
         elif result == 2:
-            games_user_win +=1
+            games_user_win += 1
 
         # выводим на экран статистику игр
         print_statistic()
 
         # cпрашиваем пользователя о продолжении игры
 
-        if continue_game() == False:
+        if not continue_game():
             break
 
         # начинаем новую игру
@@ -495,5 +518,3 @@ while (True):
         clear_array()
         print_array()
         games += 1
-        
-
