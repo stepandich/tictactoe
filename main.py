@@ -13,7 +13,7 @@
 
 3. два игрока: человек и компьютер(ПК)
    у человека спрашиваем координаты ячейки: 
-   компьтера сам выбирает ячейку: случайным образом из свободных
+   Компьютер сам выбирает ячейку: случайным образом из свободных
 
 4. выбор кто начинает игру: человек или ПК
 5. после завершение игры спрашивать: выход или продолжить. 
@@ -88,7 +88,7 @@ def print_array():
     for row in range(rows):
         print(row + 1, end="")
         for col in range(cols):
-            #print("___", end="|")
+            # print("___", end="|")
             print("_", end="")
 
             print(game_array[row][col], end="")
@@ -99,7 +99,7 @@ def print_array():
 
     print(" ", end="")
     for col in range(cols):
-        #print("___", end="|")
+        # print("___", end="|")
         print("_", end="")
 
         print(col + 1, end="")
@@ -125,8 +125,8 @@ def user_step():
         # 2. проверка на правильность данных
 
         if row >= rows or row < 0 or col >= cols or col < 0:
-            # 3. данные некорректы , переход в начало 1.
-            print("Данные введены неккоректно!")
+            # 3. данные некорректны, переход в начало 1.
+            print("Данные введены некорректно!")
             continue
 
         # 4. шаг игрока: заполним ячейку
@@ -146,8 +146,8 @@ def is_even(n) -> bool:
 
 def is_odd(n) -> bool:
     """
-    Определяет нечетное ли число
-    :param n: число
+    Определяет нечетное ли число.
+    :param n: Число.
     :return: True если нечетное, False если иначе
     """
     return n % 2 == 1
@@ -160,7 +160,7 @@ def test_center() -> bool:
     """
     if is_even(rows):
         return False
-    # строка и столбей центральной ячейки 
+    # строка и столбец центральной ячейки
     center = rows // 2
 
     # заполнена ли ячейка
@@ -210,7 +210,7 @@ def pc_step():
         return
     # проверка центральной ячейки
     if test_center():
-        # если ее нашли и заполнили, то выходим из функции т.к. шаг сделан
+        # Если ее нашли и заполнили, то выходим из функции т.к. шаг сделан
         return
 
     # поиск  свободных ячеек.
@@ -245,7 +245,7 @@ def get_select_player() -> bool:
 
 def count_cells(row, code):
     """
-    Подсчет занятых ячеек по по строке
+    Подсчет занятых ячеек по строке
     """
 
     counter = 0
@@ -382,13 +382,13 @@ def get_game_result() -> int:
 
 def continue_game() -> bool:
     """
-    спрашиваем пользователя о продолжении игры.
+    Спрашиваем пользователя о продолжении игры.
     return: True - если играем новую игру, False - если завершаем
     """
-    # получаем строку от пользователь и сохраняем в переменную
+    # получаем строку от пользователя и сохраняем в переменную
     string_from_user = input("Будем играть ещё или нет ? 1 если продолжить ")
 
-    # если строка равно 'yes' то фукция должна вернуть True, иначе False
+    # если строка равно 'yes', то функция должна вернуть True, иначе False
 
     return string_from_user == "1"
 
@@ -414,7 +414,7 @@ def set_first_for_row(row, code):
 
 def set_first_for_col(col, code):
     """
-    в указанном cтолбце найти свободную ячейку и заполнить кодом
+    В указанном столбце найти свободную ячейку и заполнить кодом
     """
     for row in range(rows):
         if game_array[row][col] == free_code:
@@ -424,7 +424,7 @@ def set_first_for_col(col, code):
 
 def set_first_for_diag_1(code):
     """
-    в указанной диагонали найти свободную ячейку и заполнить кодом
+    В указанной диагонали найти свободную ячейку и заполнить кодом
     """
     for row in range(rows):
         if game_array[row][row] == free_code:
@@ -434,7 +434,7 @@ def set_first_for_diag_1(code):
 
 def set_first_for_diag_2(code):
     """
-    в указанной  диагонали найти свободную ячейку и заполнить кодом
+    В указанной диагонали найти свободную ячейку и заполнить кодом
     """
     for row in range(rows):
         if game_array[row][rows - row - 1] == free_code:
@@ -456,7 +456,7 @@ def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
         free_count = count_cells(i, code_1)
 
         if user_count == 2 and free_count == 1:
-            # заполняем свободую ячейку 
+            # заполняем свободную ячейку
             set_first_for_row(i, pc_code)
             # и выходим из функции
             return True
@@ -466,7 +466,7 @@ def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
         free_count = count_cells_col(i, code_1)
 
         if user_count == 2 and free_count == 1:
-            # заполняем свободую ячейку 
+            # заполняем свободную ячейку
             set_first_for_col(i, pc_code)
             # и выходим из функции
             return True
@@ -487,7 +487,7 @@ def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
     free_count = count_cells_diag_2(code_1)
 
     if user_count == 2 and free_count == 1:
-        # заполняем свободую ячейку 
+        # заполняем свободную ячейку
         set_first_for_diag_2(pc_code)
         # и выходим из функции
         return True
@@ -538,7 +538,7 @@ while True:
         # выводим на экран статистику игр
         print_statistic()
 
-        # cпрашиваем пользователя о продолжении игры
+        # спрашиваем пользователя о продолжении игры
 
         if not continue_game():
             # выход из игры
