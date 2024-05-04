@@ -51,6 +51,11 @@ game_array = None
 # Хранилище состояние ячеек(игры). Матрицы rows*cols
 
 def create_array():
+    """
+    функция создания матрицы.
+    :return:
+    возращает новую матрицу
+    """
     new_array = []
 
     for i in range(rows):
