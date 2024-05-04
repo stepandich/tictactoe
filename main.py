@@ -32,10 +32,12 @@ cols = rows  # количество столбцов
 
 select_player = False  # F = человеке T = ПК
 
+# заполнение ячейки
 user_code = "x"
 pc_code = "o"
 free_code = " "
 
+# Статистика ика игры
 # кол-во игр
 games = 0
 # кол-во побед человека
@@ -43,15 +45,23 @@ games_user_win = 0
 # количество ничьих
 games_draw = 0
 
-game_array = []
+game_array = None
 
-for i in range(rows):
-    col = []
 
-    for j in range(cols):
-        col.append(None)
+# Хранилище состояние ячеек(игры). Матрицы rows*cols
 
-    game_array.append(col)
+def create_array():
+    new_array = []
+
+    for i in range(rows):
+        col = []
+
+        for j in range(cols):
+            col.append(None)
+
+        new_array.append(col)
+
+    return new_array
 
 
 def clear_array(code: str = free_code):
@@ -465,6 +475,7 @@ def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
     return False
 
 
+game_array = create_array()
 clear_array()
 print_array()
 
