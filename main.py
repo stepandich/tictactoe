@@ -80,6 +80,11 @@ def clear_array(code: str = free_code):
 
 
 def print_array():
+    """
+    вывод матрицы на экран.
+    отабражаем на экране сетку и состояние ячеек.
+    :return:
+    """
     for row in range(rows):
         print(row + 1, end="")
         for col in range(cols):
@@ -149,6 +154,10 @@ def is_odd(n) -> bool:
 
 
 def test_center() -> bool:
+    """
+    проверяет ячейку по центру  и если она свободна тоделаем умный ход.
+    :return:
+    """
     if is_even(rows):
         return False
     # строка и столбей центральной ячейки 
@@ -178,6 +187,10 @@ def test_center() -> bool:
 
 
 def pc_step():
+    """
+    ПК делает свой ход.
+    :return:
+    """
     # 1 поиск завершения игры
 
     if find_danger(pc_code):
@@ -200,6 +213,7 @@ def pc_step():
         # если ее нашли и заполнили, то выходим из функции т.к. шаг сделан
         return
 
+    # поиск  свободных ячеек.
     free_cells = []
 
     for row in range(rows):
@@ -209,6 +223,7 @@ def pc_step():
                 free_cells.append([row, col])
 
     if len(free_cells) >= 0:
+        # из списка свободных ячеек выбираем случайным образом одну ячейку.
         free_index = random.randint(0, len(free_cells) - 1)
 
         data = free_cells[free_index]
@@ -222,7 +237,7 @@ def pc_step():
 def get_select_player() -> bool:
     """
     Выбор первого игрока.
-    # F = человеке T = ПК
+    # F = человек T = ПК
 
     """
     return input("Выберете кто начинает игру: 1 если ПК, иначе человек ") == "1"
@@ -479,7 +494,7 @@ def find_danger(code_2: str = user_code, code_1: str = free_code) -> bool:
 
     return False
 
-
+# начало игры. создание хранилища.
 game_array = create_array()
 clear_array()
 print_array()
@@ -488,6 +503,7 @@ print_array()
 select_player = get_select_player()
 games += 1
 
+# игра продолжается пока мы не выйдем.
 while True:
 
     # получение результата игры
@@ -525,6 +541,7 @@ while True:
         # cпрашиваем пользователя о продолжении игры
 
         if not continue_game():
+            # выход из игры
             break
 
         # начинаем новую игру
